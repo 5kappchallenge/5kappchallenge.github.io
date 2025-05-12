@@ -3,45 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5K App Challenge - Groupe Privé</title>
+    <title>5K App Challenge - Crée une app rentable en 90 jours</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
+            color: #f5f5f5;
+            scroll-behavior: smooth;
+        }
+        .hero-text {
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        .bounce {
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+        .pulse {
+            animation: pulse 6s infinite;
+        }
+        .pulse-light {
+            animation: pulse 3s infinite;
+        }
+        .slide-up {
+            transform: translateY(100%);
+            transition: transform 300ms ease-out;
+        }
+        .slide-up.visible {
+            transform: translateY(0);
+        }
+        
+        /* New styles for the redesign */
+        .section-title {
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        .plan-step {
+            transition: all 0.3s ease;
+        }
+        
+        .plan-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .plan-arrow {
+            position: absolute;
+            height: 2px;
+            background: rgba(255,255,255,0.2);
+            transform: rotate(-45deg);
+            transform-origin: left;
+            width: 30px;
+        }
+        
+        .benefit-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            z-index: 1;
+        }
+        
+        .objection-card {
+            transform: rotate(-1deg);
+            transition: all 0.3s ease;
+        }
+        
+        .objection-card:nth-child(even) {
+            transform: rotate(1deg);
+        }
+        
+        .objection-card:hover {
+            transform: rotate(0);
+        }
+        
+        .final-cta {
+            background: linear-gradient(135deg, #0d0d0d 0%, #151515 100%);
+        }
+        
+        @media (min-width: 768px) {
+            .steps-container {
+                display: flex;
+                justify-content: space-between;
+            }
+            
+            .plan-step {
+                width: 18%;
+            }
+            
+            .horizontal-arrow {
+                position: absolute;
+                top: 50%;
+                right: -15%;
+                width: 15%;
+                height: 2px;
+                background: rgba(255,255,255,0.2);
+            }
+            
+            .horizontal-arrow::after {
+                content: '';
+                position: absolute;
+                right: 0;
+                top: -4px;
+                width: 10px;
+                height: 10px;
+                border-top: 2px solid rgba(255,255,255,0.2);
+                border-right: 2px solid rgba(255,255,255,0.2);
+                transform: rotate(45deg);
+            }
+        }
     </style>
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen">
-    <div class="max-w-2xl mx-auto px-4 py-8 text-center">
-        <h1 class="text-4xl font-bold text-gray-900 mb-6">Le 5K App Challenge 🚀</h1>
-        <p class="text-xl text-gray-700 mb-12">
-            90 jours pour créer une app rentable et atteindre 5K€ de MRR.<br>
-            Rejoins l'aventure en devenant membre du groupe privé avec Harry !
-        </p>
-
-        <div class="inline-block space-y-3 text-gray-600 mb-12 text-left">
-            <p class="text-lg">
-                <span class="text-red-400 mr-2">•</span>
-                Des appels <u>quotidiens</u> pour échanger.
-            </p>
-            <p class="text-lg">
-                <span class="text-red-400 mr-2">•</span>
-                Un groupe cool pour tenir la longueur.
-            </p>            
-            <p class="text-lg">
-                <span class="text-red-400 mr-2">•</span>
-                Des ressources <u>et prompts</u> pour réussir.
-            </p>
-        </div>
-        
-        <div class="space-y-4">
-            <a href="https://whop.com/5kappchallenge/" 
-               class="inline-block bg-gradient-to-r from-red-500 to-red-600 text-white text-xl font-bold py-4 px-8 rounded-lg hover:from-red-600 hover:to-red-700 transition-all shadow-lg">
-                🚀 Rejoindre le groupe privé
+<body class="bg-black text-slate-100">
+    <!-- Mobile Sticky CTA (initially hidden) -->
+    <div id="sticky-cta" class="fixed bottom-0 left-0 w-full bg-zinc-900 p-4 z-50 slide-up hidden md:hidden">
+        <div class="flex items-center justify-between max-w-sm mx-auto">
+            <span class="font-bold text-sm">prêt ? fonce →</span>
+            <a href="https://whop.com/5kappchallenge/" class="bg-white text-black text-sm font-bold py-2 px-5 rounded-lg hover:bg-slate-200 transition-all">
+                je rejoins
             </a>
-            <p class="text-sm text-gray-500">
-                79€ par mois • Accès immédiat • <span class="text-red-500">39/50 membres</span>
-            </p>
         </div>
     </div>
+
+    <div class="min-h-screen flex flex-col">
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center py-12 px-4 sm:px-6 lg:px-8 pb-24">
+            <div class="w-full max-w-5xl mx-auto">
+                <h1 class="hero-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 tracking-tight">
+                    crée une app.<br>
+                    génère 5k/mois.<br>
+                    t'es pas tout seul.
+                </h1>
+                
+                <div class="mt-10 mb-16">
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-2">Rejoins le 5K App Challenge</h2>
+                    <p class="text-xl text-slate-300 max-w-3xl">
+                        Un programme unique pour t'aider à créer une app rentable en 90 jours – même si t'as jamais lancé de produit avant.
+                    </p>
+                </div>
+                
+                <a href="https://whop.com/5kappchallenge/" class="inline-block bg-white text-black text-xl font-bold py-4 px-10 rounded-lg hover:bg-slate-200 transition-all">
+                    Je rejoins le challenge maintenant
+                </a>
+            </div>
+            
+            <!-- Scroll hint - updated position and animations -->
+            <div class="absolute bottom-16 left-0 right-0 flex flex-col items-center">
+                <a href="#plan" class="bounce text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </a>
+                <span class="text-md mt-2 opacity-80">⬇ scrolles pour voir le plan de bataille ⬇</span>
+            </div>
+        </section>
+        
+        <!-- NEW: Plan d'attaque Section -->
+        <section id="plan" class="py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0a0a]" data-aos="fade-up">
+            <div class="w-full max-w-6xl mx-auto">
+                <h2 class="section-title text-center text-2xl mb-16">TON PLAN D'ATTAQUE</h2>
+                
+                <div class="relative steps-container flex flex-col md:flex-row gap-6 md:gap-0 mt-12">
+                    <!-- Step 1 -->
+                    <div class="plan-step relative bg-[#111] p-6 rounded-xl" data-aos="fade-up" data-aos-delay="0">
+                        <div class="text-4xl mb-3">💡</div>
+                        <h3 class="text-xl font-bold mb-2">idée</h3>
+                        <p class="text-sm text-slate-300">Trouver un problème qui mérite une solution et valider le marché.</p>
+                        <div class="horizontal-arrow hidden md:block"></div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="plan-step relative bg-[#181818] p-6 rounded-xl" data-aos="fade-up" data-aos-delay="100">
+                        <div class="text-4xl mb-3">🎨</div>
+                        <h3 class="text-xl font-bold mb-2">design</h3>
+                        <p class="text-sm text-slate-300">Créer une interface simple mais efficace qui résout le problème.</p>
+                        <div class="horizontal-arrow hidden md:block"></div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="plan-step relative bg-[#111] p-6 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-4xl mb-3">🛠</div>
+                        <h3 class="text-xl font-bold mb-2">dev</h3>
+                        <p class="text-sm text-slate-300">Développer le MVP en utilisant les outils adaptés à tes compétences.</p>
+                        <div class="horizontal-arrow hidden md:block"></div>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="plan-step relative bg-[#181818] p-6 rounded-xl" data-aos="fade-up" data-aos-delay="300">
+                        <div class="text-4xl mb-3">🚀</div>
+                        <h3 class="text-xl font-bold mb-2">lancement</h3>
+                        <p class="text-sm text-slate-300">Publier ton app et commencer à attirer tes premiers utilisateurs.</p>
+                        <div class="horizontal-arrow hidden md:block"></div>
+                    </div>
+                    
+                    <!-- Step 5 -->
+                    <div class="plan-step relative bg-[#111] p-6 rounded-xl" data-aos="fade-up" data-aos-delay="400">
+                        <div class="text-4xl mb-3">📈</div>
+                        <h3 class="text-xl font-bold mb-2">croissance</h3>
+                        <p class="text-sm text-slate-300">Itérer, optimiser et scaler pour atteindre 5K/mois de revenus.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- REWORKED: Benefits Section -->
+        <section id="benefits" class="py-24 px-4 sm:px-6 lg:px-8 bg-[#0d0d0d]">
+            <div class="w-full max-w-[960px] mx-auto">
+                <h2 class="section-title text-center text-2xl mb-16">DANS TON SAC À DOS</h2>
+                
+                <div class="grid md:grid-cols-1 lg:grid-cols-1 gap-8">
+                    <div data-aos="fade-up" data-aos-delay="0" class="benefit-card bg-[#151515] rounded-2xl p-8 flex items-start">
+                        <div class="text-5xl mr-8 hidden md:block">💬</div>
+                        <div>
+                            <div class="text-3xl mb-2 md:hidden">💬</div>
+                            <h3 class="text-2xl font-bold mb-2">Groupe ultra-actif</h3>
+                            <p class="text-lg text-slate-300">Des gens comme toi, qui postent tous les jours. Tu te sens jamais solo.</p>
+                        </div>
+                    </div>
+                    
+                    <div data-aos="fade-up" data-aos-delay="100" class="benefit-card bg-[#181818] rounded-2xl p-8 flex items-start">
+                        <div class="text-5xl mr-8 hidden md:block">📞</div>
+                        <div>
+                            <div class="text-3xl mb-2 md:hidden">📞</div>
+                            <h3 class="text-2xl font-bold mb-2">Appels en live chaque soir</h3>
+                            <p class="text-lg text-slate-300">Tu bloques ? T'as une question ? On se capte. Tous les soirs.</p>
+                        </div>
+                    </div>
+                    
+                    <div data-aos="fade-up" data-aos-delay="200" class="benefit-card bg-[#151515] rounded-2xl p-8 flex items-start">
+                        <div class="text-5xl mr-8 hidden md:block">🧰</div>
+                        <div>
+                            <div class="text-3xl mb-2 md:hidden">🧰</div>
+                            <h3 class="text-2xl font-bold mb-2">Templates & raccourcis</h3>
+                            <p class="text-lg text-slate-300">Je te donne mes frameworks, mes prompts, mes outils, mes hacks.</p>
+                        </div>
+                    </div>
+                    
+                    <div data-aos="fade-up" data-aos-delay="300" class="benefit-card bg-[#181818] rounded-2xl p-8 flex items-start">
+                        <div class="text-5xl mr-8 hidden md:block">🧠</div>
+                        <div>
+                            <div class="text-3xl mb-2 md:hidden">🧠</div>
+                            <h3 class="text-2xl font-bold mb-2">Journal de bord</h3>
+                            <p class="text-lg text-slate-300">Tu vois tout. Les erreurs, les victoires, les doutes. En live.</p>
+                        </div>
+                    </div>
+                    
+                    <div data-aos="fade-up" data-aos-delay="400" class="benefit-card bg-[#151515] rounded-2xl p-8 flex items-start">
+                        <div class="text-5xl mr-8 hidden md:block">🔥</div>
+                        <div>
+                            <div class="text-3xl mb-2 md:hidden">🔥</div>
+                            <h3 class="text-2xl font-bold mb-2">Le cours complet</h3>
+                            <p class="text-lg text-slate-300">Après avoir débroussaillé la jungle en public, je te déroule le tapis rouge (à partir de juillet)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- REWORKED: Storytelling Section (replacing FAQ) -->
+        <section id="objections" class="py-24 px-4 sm:px-6 lg:px-8 bg-black">
+            <div class="w-full max-w-[960px] mx-auto">
+                <h2 class="section-title text-center text-2xl mb-16">OUAIS MAIS...</h2>
+                
+                <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div data-aos="fade-up" data-aos-delay="0" class="objection-card bg-[#181818] rounded-2xl p-8 border border-zinc-800" style="transform: rotate(-1deg);">
+                        <h3 class="text-xl font-bold mb-4">"j'ai jamais codé de ma vie"</h3>
+                        <p class="text-lg text-slate-300">→ C'est pas un cours de code. C'est un plan d'action. Tu peux utiliser des outils no-code ou te faire accompagner.</p>
+                    </div>
+                    
+                    <div data-aos="fade-up" data-aos-delay="100" class="objection-card bg-[#181818] rounded-2xl p-8 border border-zinc-800" style="transform: rotate(1deg);">
+                        <h3 class="text-xl font-bold mb-4">"je sais pas si j'ai une bonne idée"</h3>
+                        <p class="text-lg text-slate-300">→ On la trouve ensemble. Et surtout on la teste vite. C'est comme ça qu'on valide.</p>
+                    </div>
+                    
+                    <div data-aos="fade-up" data-aos-delay="200" class="objection-card bg-[#181818] rounded-2xl p-8 border border-zinc-800" style="transform: rotate(-1deg);">
+                        <h3 class="text-xl font-bold mb-4">"et si je rate ?"</h3>
+                        <p class="text-lg text-slate-300">→ Tu rates rien. Tu apprends. Tu avances. Et t'as le droit de recommencer. Le seul vrai échec, c'est d'abandonner.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- REWORKED: Final CTA Section -->
+        <section class="py-24 px-4 sm:px-6 lg:px-8 bg-black">
+            <div class="w-full max-w-[700px] mx-auto final-cta rounded-2xl p-16 text-center shadow-2xl" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
+                    t'as 90 jours pour créer une app.<br>
+                    ça peut changer ta vie.
+                </h2>
+                <p class="text-xl text-slate-300 mb-10">Le groupe t'attend. Le plan est prêt. Le reste dépend de toi.</p>
+                
+                <a href="https://whop.com/5kappchallenge/" class="inline-block bg-white text-black text-xl font-bold py-4 px-10 rounded-lg hover:bg-slate-200 transition-all pulse">
+                    Je rejoins maintenant
+                </a>
+                
+                <p class="text-sm text-slate-400 mt-8 opacity-70 flex items-center justify-center">
+                    <span class="mr-1">🔒</span> Paiement 100% sécurisé via Whop
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS with enhanced settings
+            AOS.init({
+                duration: 800,
+                offset: 100,
+                once: true,
+                easing: 'ease-out-cubic'
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Mobile sticky CTA
+            const stickyCta = document.getElementById('sticky-cta');
+            let lastScrollY = window.scrollY;
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) {
+                    stickyCta.classList.remove('hidden');
+                    setTimeout(() => {
+                        stickyCta.classList.add('visible');
+                    }, 10);
+                } else {
+                    stickyCta.classList.remove('visible');
+                    setTimeout(() => {
+                        if (!stickyCta.classList.contains('visible')) {
+                            stickyCta.classList.add('hidden');
+                        }
+                    }, 300);
+                }
+                
+                // Hide on scroll up
+                if (window.scrollY < lastScrollY && window.scrollY > 400) {
+                    stickyCta.classList.remove('visible');
+                } else if (window.scrollY > lastScrollY && window.scrollY > 400) {
+                    stickyCta.classList.add('visible');
+                }
+                
+                lastScrollY = window.scrollY;
+            });
+            
+            // Add hover effects for plan steps
+            document.querySelectorAll('.plan-step').forEach(step => {
+                step.addEventListener('mouseenter', function() {
+                    this.classList.add('z-10');
+                });
+                step.addEventListener('mouseleave', function() {
+                    this.classList.remove('z-10');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
