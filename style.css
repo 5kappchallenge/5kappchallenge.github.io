@@ -29,6 +29,70 @@ body {
     width: 100%;
 }
 
+/* Badge Beta */
+.beta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #333333;
+}
+
+.beta-indicator {
+    width: 8px;
+    height: 8px;
+    background-color: #ff6b35;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.beta-indicator::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background-color: #ff6b35;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: pulse-ring 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+.beta-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
 /* Titre principal */
 .main-title {
     font-size: clamp(1.8rem, 4vw, 2.5rem);
